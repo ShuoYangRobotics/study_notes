@@ -23,11 +23,11 @@
 \maketitle
 这篇教程围绕多旋翼飞行器的动力学模型展开介绍，对旋转表示法、角速度、惯量、欧拉角、四元数、欧拉方程等概念进行深入讲解。
 
-一般来说，研究多旋翼飞行器的工程师和科学家们都是电子、机械、计算机科学背景，他们除了非常基本的数学物理课程之外，可能并没有系统地学习基本的经典力学知识和代数知识。
+一般来说，研究多旋翼飞行器的工程师和科学家们都是电子、机械、计算机科学背景，他们除了非常基本的数学物理课程之外，可能并没有系统地学习基本的经典力学知识和代数知识。但是为了深入理解工程知识，这些知识背后的数学和物理是必须要深究的。
 然而按照正统的数学和物理课程学习相关知识又会花费过多的时间，因此我认为通过多旋翼飞行器控制中对数学要求最高的部分：动力学建模，穿插介绍相关的数学物理知识，是一个比较方便整理思路并且易于理解的学习方法。
 因为每一个数学或者物理的知识点被介绍出来之后，都会立即应用到实际的工程问题中，读者很直观地看到如何用数学和物理知识指导实际需求。
 
-本教程尽量用明白清晰的语言介绍各个知识点，同时尽量不跳过任何公式推导的中间过程。有些地方可能会显得行文冗长多余，数学功底好的读者可以略去公式前后文的解释。
+本教程使用比较规范的符号介绍数学和物理的概念，尽量用明白清晰的语言介绍各个知识点，同时尽量不跳过任何公式推导的中间过程。有些地方可能会显得行文冗长多余，数学功底好的读者可以略去公式前后文的解释。
 
 \section{基本符号定义和坐标系定义}
 本节介绍一些基本的符号定义以及飞行器控制中常用的坐标系定义，教程剩余章节中将大量使用本节中的符号。
@@ -80,7 +80,7 @@ $\lfloor \vv{\omega} \ \times \rfloor$，将矢量$\vv{\omega}$变换成反对�
 $$
 \vv{p} = p_1\vv{i}+p_2\vv{j}+p_3\vv{k}
 $$
-其中$\vv{i}$，$\vv{j}$，$\vv{k}$分别是坐标系$xyz$三轴的单位向量：
+其中$\vv{i}$，$\vv{j}$，$\vv{k}$分别是坐标系$xyz$三轴的单位矢量：
 $$
 \vv{i} = \begin{bmatrix}
 1\\0\\0
@@ -92,7 +92,7 @@ $$
 0\\0\\1
 \end{bmatrix}
 $$
-这样我们也可以把单位向量合并起来，把$\vv{p}$简单写成$\vv{p} = \begin{bmatrix}
+这样我们也可以把单位矢量合并起来，把$\vv{p}$简单写成$\vv{p} = \begin{bmatrix}
 p_1\\p_2\\p_3
 \end{bmatrix}$。在后面的教程中，我们会经常切换两种表示方法以便于解释不同的问题。
 
@@ -101,8 +101,11 @@ p_1\\p_2\\p_3
 这一节中我们暂时不用飞行器和大地坐标系的术语，而是考虑更一般的情况。
 
 假设空间中有一个坐标系$e$(也可以用$OXYZ$来表示，因为我们用$\vv{OX}$、$\vv{OY}$、$\vv{OZ}$来称呼它的三个轴），有一个刚体处于这个坐标系中，我们在刚体上附加机体坐标系$b$（也可以用$oxyz$来表示，同理它的三个轴是$\vv{ox}$、$\vv{oy}$、$\vv{oz}$）。初始时坐标系$e$和坐标系$b$是重合的。假设刚体因为某些原因变换了姿态，那么坐标系$b$的各轴就不再与坐标系$e$的各轴重合，不过他们的原点依然是重合的。
-%%%%%%%%%%%%%插个图
-%%%%%%%%%%%%%
+
+\begin{center}
+\includegraphics[width=0.6\textwidth]{images/IMG_2295.jpg}
+\end{center}
+
 为了描述变换姿态后坐标系$b$和坐标系$e$之间的关系，我们注意到坐标系$b$的各轴在坐标系$b$中可以用前述的$\vv{i}$、$\vv{j}$和$\vv{k}$来表示，但是如果从坐标系$e$中观察，坐标系$b$的各轴就可以看做坐标系$e$中的普通矢量，那么坐标系$b$的一个轴可以表示成坐标系$e$的三个轴的线性组合。也即
 $$
 \vv{ox} = r_{11}\vv{OX} + r_{21}\vv{OY} + r_{31}\vv{OZ} 
@@ -194,7 +197,7 @@ r_{31} & r_{32} & r_{33}
 $$
 是非常一般性的结论，任意坐标系之间都有相同的变换关系。
 
-因为$\vv{ox}$是坐标系$b$的$\vv{i}$，所以它是单位向量，而且与同为单位向量的$\vv{oy}$和$\vv{oz}$都正交。因此我们说${\bf R}$是一个单位正交矩阵（orthonormal matrix）。
+因为$\vv{ox}$是坐标系$b$的$\vv{i}$，所以它是单位矢量，而且与同为单位矢量的$\vv{oy}$和$\vv{oz}$都正交。因此我们说${\bf R}$是一个单位正交矩阵（orthonormal matrix）。
 
 通过基本线性代数之后和涉及叉乘的变换，我们可以证明以下两个性质
 $$
@@ -214,9 +217,13 @@ $$
 \subsection{刚体变换}\label{sec:transform}
 了解旋转矩阵之后，我们回到飞行器在大地坐标系中飞行的场景。现在我们可以通过一个辅助坐标系来描述飞行器上某个质点相对与大地坐标系原点的位置关系了。考虑下图中的场景：
 
+\begin{center}
+\includegraphics[width=0.6\textwidth]{images/IMG_2297.jpg}
+\end{center}
+
 我们用$OXYZ$来表示大地坐标系，$oxyz$来表示机体坐标系。然后我们建立中间坐标系$oXYZ$（注意大小写），由大地坐标系平移得到，所以中间坐标系$oXYZ$的各轴都与大地坐标系的各轴平行，而且中间坐标系$oXYZ$的原点与机体坐标系$oxyz$的原点重合。这样$OXYZ$和$oXYZ$之间仅有平移变换，而$oxyz$与$oXYZ$之间仅有旋转变换。
-%%%%%%%%%%%%%插个图
-%%%%%%%%%%%%%
+
+
 
 假设原点$o$在大地坐标系$OXYZ$中的位置为$\vv{p}$，飞行器上某质点$\bf{q}$在机体坐标系$oxyz$中的位置为$\vv{r}$，$oxyz$与$oXYZ$之间的变换用旋转矩阵${\bf R}$表示，则很容易看出
 \begin{equation}\label{eqn:transform}
@@ -243,9 +250,13 @@ $$
 
 在章节\ref{sec:transform}中我们介绍了刚体变换，这一节中我们先从回顾高中物理中学过的角速度定义开始，推广到三维的情况，然后再把角速度和刚体变换连接起来。
 \subsection{速度和角速度的关系-二维}	
-%%%%%%%%%%%%%插个图
-%%%%%%%%%%%%%
-我们按图示建立二维笛卡尔坐标系，在二维平面上转动的点的位置可以用距离原点的距离$\vv{r}$和夹角$\theta$表示，角速度被定义为
+我们按下图所示建立二维笛卡尔坐标系
+
+\begin{center}
+\includegraphics[width=0.6\textwidth]{images/IMG_2298.jpg}
+\end{center}
+
+在二维平面上转动的点的位置可以用距离原点的距离$\vv{r}$和夹角$\theta$表示，角速度被定义为
 $$
 \omega = \frac{d\theta}{dt}
 $$
@@ -257,8 +268,10 @@ $$
 
 \subsection{速度和角速度的关系-三维中的二维平面}	\label{sec:velandw}
 考虑下图的三维笛卡尔坐标系，坐标系中有一质点在绕$z$轴逆时针转动。
-%%%%%%%%%%%%%插个图
-%%%%%%%%%%%%%
+
+\begin{center}
+\includegraphics[width=0.6\textwidth]{images/IMG_2299.jpg}
+\end{center}
 
 这个质点的轨迹处于一个垂直于$z$轴、平行于$xy$轴的平面上。按照上一节的定义，则质点的角速度的方向其实就是$z$轴，角速度用$\vv{\omega} = \frac{d\theta}{dt}\vv{k}$表示。我们用$\vv{r}_1$表示质点到$z$轴的距离，用$\vv{r}$表示质点到坐标系原点的距离。很显然地我们有
 $$
@@ -275,8 +288,10 @@ $$
 \end{equation}
 
 这种情况下的转动轴不垂直与坐标系的任何一个轴，这使得我们建立一个容易被描述的旋转所在的平面非常困难。这种情况下最好的办法是质点的运动投影到$xy$、$xz$和$yz$平面上分析每一个平面内的速度特性，然后再把每个平面上的分量叠加。这是物理学中常用的分析方法。
-%%%%%%%%%%%%%插个图
-%%%%%%%%%%%%%
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{images/IMG_2300.jpg}
+\end{center}
 
 首先先看$xy$平面，在这个平面中角速度的分量是$\omega_3\vv{k}$，质点投影的坐标是$P=(x,y)$，它距原点的距离为$r = \sqrt{x^2+y^2}$。我们考虑质点从$P$开始，在$\Delta t$时间内发生了一个微小的旋转，转过了$\Delta\theta = \omega_3\Delta t$，到达坐标$Q$，则矢量$\vv{PQ}$的长度为$|PQ| = r\Delta\theta$。如果把$Q$的坐标记为$(x+\Delta x, y + \Delta y)$，我们可以推导出
 $$
@@ -494,7 +509,7 @@ $$
 
 \ \\
 
-我们换一种思路来推导公式\ref{eqn:bodyvel}，如果我们把$\vv{r}_e$写成单位向量相加的形式
+我们换一种思路来推导公式\ref{eqn:bodyvel}，如果我们把$\vv{r}_e$写成单位矢量相加的形式
 $$
 \vv{r}_e(t) = r_1(t)\vv{i}+r_2(t)\vv{j}+r_2(t)\vv{k}
 $$
@@ -534,7 +549,7 @@ $$
 
 常用的旋转矩阵参数化方法有欧拉角(Euler Angle)，指数映射（Exponential Map），角轴法（Axis Angle）和四元数（Quaternion）。在本章中我们介绍欧拉角和四元数，它们在飞行器控制中比较常用。
 \subsection{欧拉角}
-欧拉角将所有的旋转矩阵分解成三个连续的只绕坐标系基准轴的旋转，读者不难想到这样的分解可以有很多种，比如要把桌面上的一张A4纸翻过来，可以直接像翻书那样从长边翻转，也可以先让纸在桌面上上下旋转，然后再从短边翻转。人们发明了很多标记性的符号来代表不同的欧拉角分解方式，在资料中读者可以看到“$z-x-z$”或者“$x-y'-z''$”z这样的记号。在各种各样的欧拉角中，最为广泛使用的是NASA在1977年制定的标准，被称为“Body 3-2-1顺序”，由$(\psi, \theta, \phi)$三个角度值参数化\cite{nasa}。在前述章节\ref{sec:bodyframe}中，我们在机体坐标系中介绍了横滚、俯仰、偏航三个轴的概念。这三个概念最早就是从NASA定义的欧拉角的顺序中衍生出来的。对于欧拉角，本教程中只介绍NASA定义的这种顺序。
+欧拉角将所有的旋转矩阵分解成三个连续的只绕坐标系基准轴的旋转，读者不难想到这样的分解可以有很多种，比如要把桌面上的一张A4纸翻过来，可以直接像翻书那样从长边翻转，也可以先让纸在桌面上上下旋转，然后再从短边翻转。人们发明了很多标记性的符号来代表不同的欧拉角分解方式，在资料中读者可以看到“$z-x-z$”或者“$x-y'-z''$”z这样的记号。在各种各样的欧拉角中，最为广泛使用的是NASA在1977年制定的标准，被称为“Body 3-2-1顺序”，由$(\psi, \theta, \phi)$三个角度值参数化\cite{nasa}。在前述章节\ref{sec:bodyframe}中，我们在机体坐标系中介绍了横滚、俯仰、偏航三个轴的概念。这三个概念最早就是从NASA定义的欧拉角的顺序中衍生出来的。对于欧拉角，本章节中只介绍NASA定义的这种顺序。在\ref{sec:euler}中我们会介绍另一种。
 
 为了更好地理解欧拉角，这里我们还要强调一下旋转矩阵的另一种解释方式。在章节\ref{sec:rotmtx}中我们只介绍了在已知两个坐标系的坐标轴的关系的情况下如何求出他们之间的旋转矩阵${\bf R}$，我们提到“矩阵${\bf R}$将坐标系$b$中的点的表示转换到坐标系$e$中表示”。在那一章节的推导中，我们假设刚体先经历了一个旋转变换才导致了机体坐标系和大地坐标系不再重合，然后我们推导出这两个坐标系之间的旋转矩阵。因此这个旋转矩阵和刚体首先经历的旋转变换是一对一的。读者可能会想到，我们也可以把旋转矩阵理解成一种控制性的操作，用来说明旋转变换的结果。如果我们给刚体施加一个旋转操作，用${\bf R}$来表示这个操作。假设刚体上的某一个质点在坐标系$e$中的表示为$\vv{p}$，那${\bf R}\vv{p}$就是经历旋转操作之后质点的表示，注意这个质点始终是在坐标系$e$中表示的。
 
@@ -797,7 +812,7 @@ $$
       \ \ \ \ \ 
       q_4 = cos(\theta/2)
 \end{equation}
-其中$\vv{k} = [k_x \ \ \ k_y \ \ \ k_z]^T$是一个单位向量（$\| \vv{k}\| = 1$），所以也可以明显看出
+其中$\vv{k} = [k_x \ \ \ k_y \ \ \ k_z]^T$是一个单位矢量（$\| \vv{k}\| = 1$），所以也可以明显看出
 $$
 q_1^2+q_2^2+q_3^2+q_4^2 = 1
 $$
@@ -806,7 +821,7 @@ $$
  f: \ \ \ \ \mathbb{R}^4 & \rightarrow SO(3) \\
 	[q_1 \ \ q_2 \ \ q_3 \ \ q_4] & \rightarrow {\bf R}	
 \end{align*}
-相比起欧拉角来说，旋转四元数的数学特性好了很多，它和旋转矩阵的映射是二对一的关系。读者稍加思考就能想到，在定义\ref{equ:quad_theta}中，“绕$\vv{k}$轴旋转$\theta$度角”等价于绕$-\vv{k}$轴旋转$-\theta$度角。关于这一点我们不再深入探讨，读者可以自己查阅相关资料。
+相比起欧拉角来说，旋转四元数的数学特性好了很多，它和旋转矩阵的映射是二对一的关系。读者稍加思考就能想到，在定义\ref{equ:quad_theta}中，“绕$\vv{k}$轴旋转$\theta$度角”等价于“绕$-\vv{k}$轴旋转$-\theta$度角”。关于这一点我们不再深入探讨，读者可以自己查阅相关资料。
 
 在本节剩余的部分里，如果没有另外说明，我们讨论的所有四元数都是旋转四元数。
 
@@ -823,12 +838,14 @@ $$
 $$
 \bar{q}_{eb} = \bar{q}_{ea}\bar{q}_{ab}
 $$
-这样的形式，不过这里的乘法不是矩阵乘法，而是四元数特别的乘法。而用四元数来变换三维矢量，也需要借助涉及四元数乘法的一个特殊的操作。下面我们将会逐步进行介绍。
+这样的形式，不过这里的乘法不是矩阵乘法，而是四元数特别的乘法。本教程之后的介绍中在不引起歧义的情况下都会把四元数乘法的符号$\otimes$省略掉。
+
+用四元数来像旋转矩阵那样变换三维矢量，也需要借助涉及四元数乘法的一个特殊的操作。下面我们将会逐步进行介绍。
 
 首先我们介绍四元数的乘法。假设我们有两个四元数$\bar{p}$和$\bar{q}$，我们定义它们相乘的结果如下
 \begin{align}
 \bar{q} \otimes \bar{p} = &  (q_4 + q_1\mathbf{i} + q_2\mathbf{j}+ q_3\mathbf{k}) (p_4 + p_1\mathbf{i} + p_2\mathbf{j}+ p_3\mathbf{k})   \\
- = & q_4 p_4 - q_1 p_1 - q_2 p_2 - q_3 p_3 + (q_4 p_1 + q_1 p_4 - q_2 p_3 + q_3 p_2 ) \mathbf{i}\\
+ = & q_4 p_4 - q_1 p_1 - q_2 p_2 - q_3 p_3 + (q_4 p_1 + q_1 p_4 - q_2 p_3 + q_3 p_2 ) \mathbf{i} + \cdots\\
                  = &\begin{bmatrix}
                       q_4 & -q_3 & q_2 & q_1 \\
                       q_3 & q_4 & -q_1 & q_2 \\
@@ -851,7 +868,7 @@ $$
                                             q_4
                                     \end{bmatrix}
 \end{align}
-注意到公式\ref{eqn:quatmultimtx}中我们可以把四元数的乘法$\otimes$用普通的矩阵和四维向量的乘法来表示。这也说明了四元数的乘法是不可交换的，$\bar{q} \otimes \bar{p} \neq \bar{p} \otimes \bar{q}$。
+注意到公式\ref{eqn:quatmultimtx}中我们可以把四元数的乘法$\otimes$用普通的矩阵和四维矢量的乘法来表示。这也说明了四元数的乘法是不可交换的，$\bar{q} \otimes \bar{p} \neq \bar{p} \otimes \bar{q}$。
 
 通过乘法的定义易证得，任何一个四元数与
 $$
@@ -993,10 +1010,10 @@ $$
 $$
 {\bf R}_{eb} = (2q_4^2-1) + 2q_4\lfloor \vv{q} \ \times \rfloor   + 2\vv{q}\vv{q}^T
 $$
-现在我们可以使用表达式\ref{eqn:quatrotexp}去旋转向量了。
+现在我们可以使用表达式\ref{eqn:quatrotexp}去旋转矢量了。
 %\begin{bmatrix}
 %\end{bmatrix}
-根据四元数旋转向量的表达式，我们也能看出四元数乘法和连续旋转变换的关系
+根据四元数旋转矢量的表达式，我们也能看出四元数乘法和连续旋转变换的关系
 $$
 \bar{p}_a = \bar{q}_{ab} \otimes \bar{p}_b \otimes \bar{q}^{-1}_{ab}
 $$
@@ -1131,15 +1148,15 @@ $
 $$
 \Delta \vv{L} = \vv{r} \times \Delta m(\vv{r}) \vv{v}(\vv{r})
 $$
-这里的$\Delta m(\vv{r})$代表$\Delta m$是关于$\vv{r}$的函数。而对于整个刚体，我们可以把所有的质量单元积分起来获得刚体的角动量，我们把离散的小量符号$\Delta$换成微分符号$d$
+这里的$\Delta m(\vv{r})$代表$\Delta m$是关于$\vv{r}$的函数，同样速度$\vv{v}$也是和位置相关的函数。而对于整个刚体，我们可以把所有的质量单元积分起来获得刚体的角动量，我们把离散的小量符号$\Delta$换成微分符号$d$
 $$
 \vv{L} = \int d\vv{L} = \int \vv{r} \times dm(\vv{r}) \vv{v}(\vv{r})
 $$
 在章节\label{sec:angular}中，我们用不同方法推导出了速度和角速度的关系。把$\vv{v} = \vv{\omega}\times\vv{r}$带入表达式，我们得到
 \begin{equation}
-\vv{L} = \int \vv{r} \times \vv{\omega}\times\vv{r} dm(\vv{r})
+\vv{L} = \int (\vv{r} \times \vv{\omega}\times\vv{r}) dm(\vv{r})
 \end{equation}
-在前一章中我们推导过三个向量连续叉乘的结果为表达式\ref{eqn:crosscross}，这里相似地我们可以展开$\vv{r} \times \vv{\omega}\times\vv{r}$，获得
+在前一章中我们推导过三个矢量连续叉乘的结果为表达式\ref{eqn:crosscross}，这里相似地我们可以展开$\vv{r} \times \vv{\omega}\times\vv{r}$，获得
 $$
 \vv{r} \times \vv{\omega}\times\vv{r} = 
 \begin{bmatrix}
@@ -1246,28 +1263,102 @@ $$
 \end{bmatrix}
 $$
 都会简化成
-$$
+\begin{equation}\label{eqn:simpleintertia}
 {\bf I} = 
 \begin{bmatrix}
 \int (y^2+z^2) dm	&	0		&	0	\\
 0		&	\int (x^2+z^2) dm	&	0	\\
 0		&	0		&	\int (x^2+y^2) dm
+\end{bmatrix} = 
+\begin{bmatrix}
+I_{xx}	&	0		&	0	\\
+0		&	I_{yy}	&	0	\\
+0		&	0		&	I_{zz}
 \end{bmatrix}
-$$
+\end{equation}
 对于大部分四旋翼飞行器来说，因为飞行器有比较好的对称性，所以惯性张量中的很多项都会互相抵消。比如下图中两个电机，一个位置是$(x,y)$，另一个是$(x,-y)$，这样他们在积分项$\int xy dm$当中的和为0。然而对于很多异形的飞行器比如Inspire 1，或者机体下方悬挂着很重设备的飞行器，惯性张量中的项就很难被省略了。
-%%%%%%%%%%%%%插个图
-%%%%%%%%%%%%%
+
+\begin{center}
+\includegraphics[width=0.6\textwidth]{images/IMG_2301.jpg}
+\end{center}
 
 理论上，忽略不该忽略的惯性张量元素会导致飞行控制器的延迟增大，有些延迟无法被其他方式补偿掉。因此基于模型的控制器必须要获得比较精确的惯性张量，而不基于模型的控制器，如果要优化控制器的表现，依然需要仔细设定惯性张量。
 
 \subsection{欧拉方程与机械陀螺}\label{sec:eulereqngyro}
-在章节\ref{sec:angularsensor}中我们简单介绍了机械陀螺的原理。现在我们借助欧拉方程定量地去分析陀螺旋转时的特性。首先我们定义
+在章节\ref{sec:angularsensor}中我们简单介绍了机械陀螺的原理。现在我们借助欧拉方程定量地去分析陀螺旋转时的特性。通常一个机械陀螺由旋转的陀螺以及一个固定陀螺的外圈结构构成。外圈结构可能还会固定在另外一到两个环状的结构上，整体形成万向节（gimbal），这样陀螺就不会受到任何外界的运动的干扰。
 
-因此在下图的机械陀螺的示例中，我们在input axis上施加一个力矩，output axis会开始转动。机械陀螺就是靠检测并抵抗output axis的转动来实现对input axis的力矩的测量的。
+\includegraphics[width=0.45\textwidth]{images/gyro.jpg}
+\includegraphics[width=0.4\textwidth]{images/gimbalgyro.jpg}
 
-\includegraphics[width=0.8\textwidth]{images/gyroscopeAxes.jpg}
+我们只考虑具有一个旋转陀螺和一个外圈结构的机械陀螺。我们依然用$OXYZ$来表示大地坐标系，陀螺上附加一个机体坐标系$ox_by_bz_b$。我们加上下标的原因是，在机体坐标系之外，我们更加关注的是一个建立在固定机械陀螺的外圈结构上的坐标系，我们叫它陀螺坐标系（这是一个我自己发明的名词，英文是rotation frame）。这样做的原因是，理想情况下，机械陀螺高速旋转，它和外圈结构在陀螺旋转的方向上可以被认为没有接触，因此它对外圈结构只产生两个维度上的力矩。如果外圈结构的下端固定，则机械陀螺对外圈结构的作用力会使外圈结构只会发生对于大地坐标系的两轴旋转。读者可能意识到这里说的旋转可以用欧拉角来表示，而且只需要两个角度。事实也正如此，我们把陀螺坐标系相对大地坐标系的两个欧拉角分别叫做\textbf{进动角}（precession angle）和\textbf{章动角}(nutation angle)。
+
+\begin{center}
+\includegraphics[width=0.6\textwidth]{images/gyroframe1.png}
+\end{center}
+
+章动角的物理描述是：“陀螺旋转轴和大地坐标系$Z$轴之间的夹角”，而进动角则是：“陀螺旋转轴在$XY$平面投影的矢量和$X$轴的夹角”。而嵌在外圈结构内部的机械陀螺，相对与大地坐标系，除了进动角和章动角以外，还有一个相对于外圈结构的自旋角(spin angle)。所以我们如此建立陀螺坐标系：陀螺的旋转轴为陀螺坐标系$z$轴，大地坐标系的$Z$轴和陀螺的$z$轴和叉乘获得陀螺坐标系的$x$轴($\vv{Z} \times \vv{z} = \vv{x}$)。由此，陀螺坐标系的$y$轴就是$z$轴和$x$轴的叉乘($\vv{z} \times \vv{x} = \vv{y}$)。机体坐标系相对陀螺坐标系，则增加了一个绕陀螺坐标系的$z$轴的旋转。
+
+读者可以看出这是一种新的欧拉角顺序，它被称作“$z-x'-z''$”顺序。我们前面介绍NASA定义的欧拉角顺序是按照飞行器飞行的物理特性来定义的，类似地，本节介绍的欧拉角顺序是按照机械陀螺的物理特性来定义的。欧拉角的第一个旋转产生进动角$\phi$，第二个旋转产生章动角$\theta$，第三个旋转产生自旋$\psi$。陀螺坐标系相比机体坐标系少一个自旋。
+
+要进一步分析之前，我们需要介绍欧拉方程一个变化形式。在之前我们介绍欧拉方程时，产生角动量的角速度和让坐标系发生变化的角速度是同一个。然而在机械陀螺的例子中，如果我们关注外圈结构，会发现它因为内部陀螺自旋产生了角动量，但是陀螺自旋的角速度并没有贡献到陀螺坐标系相对大地坐标系之间的旋转变换中，正是这一点导致了陀螺很多反直觉的表现。我们把外圈结构产生角动量的角速度继续写成$\vv{\omega}$，而把外圈结构相对大地坐标系的角速度写成$\vv{W}$。
+\begin{equation}\label{eqn:modifyeuler}
+\vv{M} = {\bf I}\dot{\vv{\omega}} + \vv{W} \times {\bf I}\vv{\omega}
+\end{equation}
+为了方便分析，我们用一种特殊的方式来表示$\vv{\omega}$和$\vv{W}$。如果我们始终在大地坐标系中观察陀螺，我们可以发现，在大地坐标系中表示的进动角速度$\dot{\phi}$和章动角速度$\dot{\theta}$以及自旋角速度$\dot{\psi}$，转换到陀螺坐标系和机体坐标系中表达式如下
+\begin{equation}\label{eqn:gryoW}
+\vv{W} = \dot{\theta} \vv{i} + \dot{\phi}\sin\theta \vv{j} + \dot{\phi}\cos\theta \vv{k}
+\end{equation}
+\begin{equation}\label{eqn:gyroomega}
+\vv{\omega} = \dot{\theta} \vv{i} + \dot{\phi}\sin\theta \vv{j} + (\dot{\phi}\cos\theta+\dot{\psi}) \vv{k}
+\end{equation}
+
+另外注意到这样建立坐标系后陀螺的惯性张量可以写成仅有对角线上元素的形式。如果我们把力矩的元素表示成$\vv{M} = [M_x \ \ M_y \ \ M_z]^T$，并且结合公式\ref{eqn:simpleintertia}\ref{eqn:modifyeuler}\ref{eqn:gyroomega}和\ref{eqn:gryoW}，经过非常复杂的计算和变形之后我们可以得到
+\begin{align}\label{eqn:torquetoangular}
+M_x = &	I_{xx}\ddot{\theta} - I_{yy}\dot{\phi}^2\cos\theta\sin\theta + I_{zz}\dot{\phi}\sin\theta(\dot{\phi}\cos\theta + \dot{\psi}) \\ 
+M_y = & I_{yy}(\dot{\phi}\dot{\theta}\cos\theta + \ddot{\phi}\sin\theta) - I_{zz}\dot{\theta}(\dot{\phi}\cos\theta + \dot{\psi}) + I_{xx}\dot{\phi}\dot{\theta}\cos\theta	\\
+M_z = & I_{zz}(-\dot{\phi}\dot{\theta}\sin\theta + \ddot{\phi}\cos\theta + \ddot{\phi}) - I_{xx}\dot{\phi}\dot{\theta}\sin\theta + I_{yy}\dot{\phi}\dot{\theta}\sin\theta 
+\end{align}
+我们获得了陀螺旋转过程中角速度、角加速度和力矩的关系。上述表达式的复杂程度也从一个侧面解释了为什么陀螺在转动时会产生各种匪夷所思的运动，因为力矩和角速度之间的关系极度非线性、非常难以理解。
+
+公式\ref{eqn:torquetoangular}在某些特定的条件下会大大简化，比如下图中的状态
+
+\begin{center}
+\includegraphics[width=0.6\textwidth]{images/gyroframe2.png}
+\end{center}
+
+此时，进动角和章动角的角度以及角速度满足
+$$
+\theta = 90
+$$
+$$
+\dot{\theta} = 0
+$$
+$$
+\ddot{\phi} = 0
+$$
+$$
+\ddot{\psi} = 0
+$$
+上述公式会简化到
+\begin{align}\label{eqn:torquetoangularsimple}
+M_x = &	I_{zz}\dot{\phi}\dot{\psi} \\ 
+M_y = & 0	\\
+M_z = & 0
+\end{align}
+
+因此在我们前面提过的机械陀螺的示例中，不难看出它其实是简化的公式描述的情况，input axis对应上述的$x$轴，output axis对应上述的$y$轴，在平时状态下它没有受到任何力矩。结合公式分析，外界的转动相当于在input axis上施加一个转动力矩$M_x$，此时output axis会开始产生转速$\dot{\phi}$。额外的仪器会检测output axis的转动，通过反馈控制在input axis上增加一个补偿力矩，补偿力矩反映了转动力矩的大小，因此也能根据欧拉公式换算出外界转动的角速度。
+
+\begin{center}
+\includegraphics[width=0.4\textwidth]{images/gyroscopeAxesR.png}
+\end{center}
+
+用相似的原理，也可以解释旋转的车轮为何能够“悬浮”在空中。车轮的重力相当于在$x$轴上施加了力矩，这个力矩会让车轮在$y$轴产生进动速度。
+\begin{center}
+\includegraphics[width=0.6\textwidth]{images/BicycleWheelGyro1.png}
+\end{center}
 
 \section{通过仿真程序理解前述的知识}
+读者可以看到，理解机械陀螺的原理，而理解多旋翼飞行器的建模原理，则还要使用好四元数建立旋转微分方程。
 
 在\url{https://github.com/paulyang1990/toy_code/tree/master/toy_ros_space/src/sim_drone}中有一个简单的四旋翼飞行器模拟器。在rigidBody.cpp中我们展示了如何通过程序实现欧拉方程的仿真。
 
