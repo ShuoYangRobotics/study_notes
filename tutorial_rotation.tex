@@ -11,7 +11,7 @@
 % \setsansfont{} % 设置英文无衬线字体
 \setCJKmainfont{WenQuanYi Micro Hei} % 设置缺省中文字体
 %\setCJKfamilyfont{WenQuanYi Micro Hei} % 与setCJKmainfon t等同，http://bbs.ctex.org/forum.php?mod=viewthread&tid=51057
-\parindent 2em   %段首缩进
+%\parindent 2em   %段首缩进
  
 \begin{document}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -337,7 +337,13 @@ $$
 %另外定义\ref{eqn:omegadef}中的表达式也呈现了角速度最一般的表示形式。在教程之后的章节中，我们会用$\vv{\omega} = [\omega_1\ \ \  \omega_2\ \ \  \omega_3]^T$来表示角速度。
 
 \subsection{速度和角速度的坐标系变换}
-在前面的章节的描述中，读者可以看到，我们给出的关于$\vv{\omega}$的定义涉及一根旋转轴，这根旋转轴的坐标表示在大地坐标系当中。考虑下图的情况，如果绕轴旋转的质点上附加着一个机体坐标系，则在这个坐标系中，角速度的表示会发生变化。在右图的情况中，如果在大地坐标系中观察，刚体绕$Z$轴转动；而在机体坐标系中观察，从轨迹可以看出，质点在绕$-y$轴转动。显然地，两者之间的关系就是矢量的旋转变换，如果在机体坐标系中观察的角速度是$\vv{\omega}_b$，则
+在前面的章节的描述中，读者可以看到，我们给出的关于$\vv{\omega}$的定义涉及一根旋转轴，这根旋转轴的坐标表示在大地坐标系当中。考虑下图的情况，如果绕轴旋转的质点上附加着一个机体坐标系，则在这个坐标系中，角速度的表示会发生变化。
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{images/IMG_2383.jpg}
+\end{center}
+
+在图中，如果在大地坐标系中观察，刚体绕$Z$轴转动；而在机体坐标系中观察，从轨迹可以看出，质点在绕$-y$轴转动。显然地，两者之间的关系就是矢量的旋转变换，如果在机体坐标系中观察的角速度是$\vv{\omega}_b$，则
 $$
 \vv{\omega}_e = {\bf R}_{eb}\vv{\omega}_b
 $$
@@ -356,7 +362,7 @@ $$
 $$
 读者确实也可以通过推导证明叉乘和旋转矩阵{\bf R}的这一性质
 $$
-{\bf R}\vv{a} + {\bf R}\vv{b} = {\bf R}(\vv{a} \times \vv{b}) 
+{\bf R}\vv{a} \times {\bf R}\vv{b} = {\bf R}(\vv{a} \times \vv{b}) 
 $$
 
 \subsection{角速度和旋转矩阵的关系}
@@ -369,7 +375,7 @@ $$
 \begin{equation}\label{eqn:transformt}
 \vv{q}_{e}(t) = \vv{p}_{eb}(t) + {\bf R}_{eb}(t)\vv{r}_b
 \end{equation}
-注意到我们并没有把$\vv{r}_b$当做关于时间的函数。结合$\vv{r}b$的物理意义来看，这是一个合理的假设，因为通常来说飞行器的电机不会在空中相对质心发生移动。
+注意到我们并没有把$\vv{r}_b$当做关于时间的函数。结合$\vv{r}_b$的物理意义来看，这是一个合理的假设，因为通常来说飞行器的电机不会在空中相对质心发生移动。
 
 对公式\ref{eqn:transformt}两边求导，我们可以获得
 \begin{equation*}
@@ -545,7 +551,7 @@ $$
 $$
 \dot{\vv{r}}_e(t) = {\bf R}_{eb}\tilde{\dot{\vv{r}}}_b(t) + \vv{\omega}_e \times  \vv{r}_e(t)
 $$
-和公式\ref{eqn:bodyvel}相比，我们能够看到$\dot{\vv{r}}_{eb}(t)$就是机体坐标系中相对导数在大地坐标系中的表示。
+和公式\ref{eqn:bodyvel}相比，我们能够看到$\dot{\vv{r}}_{eb}(t) = {\bf R}_{eb}\tilde{\dot{\vv{r}}}_b(t) = \tilde{\dot{\vv{r}}}_e(t)$就是机体坐标系中相对导数在大地坐标系中的表示。
 
 本小节中讨论了旋转的坐标系中运动的质点的速度求解方式。坐标系旋转还会影响很多其他物理量的导数，我们会在章节\ref{sec:euler}中见到另一个例子。
 \ \\
@@ -554,7 +560,7 @@ $$
 \subsection{角速度传感器}\label{sec:angularsensor}
 在刚体的运动中，角速度$\vv{\omega}_b$是一个非常关键的状态量。在多旋翼飞行器的控制中，我们必须能够测量这个状态量，才能对它施以准确有效的控制。目前比较成熟的角速度传感器有以下几种，所有的传感器都测量的是机体角速度。
 \subsubsection{机械陀螺}
-旋转的刚体会呈现一种反直觉的物理特性：一个绕$z$轴高速旋转的刚体，如果在$x$轴上施加一个力矩，它会开始绕$y$轴缓慢旋转。在youtube上我们可以看到很多使用车轮实现演示的视频。在完善了欧拉方程的推导之后，我们会在章节\ref{sec:eulereqngyro}中简要介绍这一现象的物理原理。
+陀螺是一种旋转对称的刚体结构，质量集中在刚体的中部，两侧则是很细的支撑杆。旋转的陀螺会呈现一种反直觉的物理特性：一个绕$z$轴高速旋转的陀螺，如果在$x$轴上施加一个力矩，它会开始绕$y$轴缓慢旋转。在youtube上我们可以看到很多使用车轮实现演示的视频。在完善了欧拉方程的推导之后，我们会在章节\ref{sec:eulereqngyro}中简要介绍该现象的物理原理。
 
 \begin{center}
 \includegraphics[width=0.6\textwidth]{images/BicycleWheelGyro.jpg}
@@ -562,7 +568,7 @@ $$
 
 \includegraphics[width=0.8\textwidth]{images/gyroscopeAxes.jpg}
 
-机械陀螺传感器利用了旋转刚体的这一特性，它的旋转刚体叫做陀螺。简单来说，如果按照上图中构成的传感器发生了绕input axis轴的转动，那么一定是因为input axis轴上有了外部施加的力矩。根据陀螺的output轴会发生的转动，我们可以进行反馈控制，给input axis轴施加一个反向力矩以消除陀螺的转动，施加的反向力矩等于外部施加的力矩，可以换算成角速度。
+机械陀螺传感器利用了旋转陀螺的这一特性。简单来说，如果按照上图中构成的传感器发生了绕input axis轴的转动，那么一定是因为input axis轴上有了外部施加的力矩。根据陀螺的output轴会发生的转动，我们可以进行反馈控制，给input axis轴施加一个反向力矩以消除陀螺的转动，施加的反向力矩等于外部施加的力矩，可以换算成角速度。
 
 因为机械陀螺中有旋转的部件，并且涉及到反馈控制器，因此它的机械机构和软硬件系统都非常复杂。
 \subsubsection{MEMS角速度传感器}
@@ -638,9 +644,9 @@ $$
 0 & 0 & 1
 \end{bmatrix}
 \begin{bmatrix}
-\cos\theta & 0 & -\sin\theta\\
+\cos\theta & 0 & \sin\theta\\
 0 & 1 & 0\\
-\sin\theta & 0 & \cos\theta \\
+-\sin\theta & 0 & \cos\theta \\
 \end{bmatrix}
 \begin{bmatrix}
 1 & 0 & 0 \\
@@ -649,15 +655,18 @@ $$
 \end{bmatrix}\\
 \label{eqn:euler}= &
 \begin{bmatrix}
-\cos\theta\cos\psi & -\cos\phi\sin\psi - \sin\phi\sin\theta\cos\psi & \sin\phi\sin\psi-\cos\phi\sin\theta\cos\psi \\
-\cos\theta\sin\psi & \cos\phi\cos\psi - \sin\phi\sin\theta\sin\psi & -\sin\phi\cos\psi-\cos\phi\sin\theta\sin\psi \\
-\sin\theta        &  \sin\phi\cos\theta                            & \cos\phi\cos\theta 
+  \cos\psi\cos\theta& \cos\psi\sin\phi\sin\theta - \cos\phi\sin\psi& \sin\phi\sin\psi + \cos\phi\cos\psi\sin\theta \\
+  \cos\theta\sin\psi& \cos\phi\cos\psi + \sin\phi\sin\psi\sin\theta& \cos\phi\sin\psi\sin\theta - \cos\psi\sin\phi  \\
+          -\sin\theta&                              \cos\theta\sin\phi&                              \cos\phi\cos\theta
+%\cos\theta\cos\psi & -\cos\phi\sin\psi - \sin\phi\sin\theta\cos\psi & \sin\phi\sin\psi-\cos\phi\sin\theta\cos\psi \\
+%\cos\theta\sin\psi & \cos\phi\cos\psi - \sin\phi\sin\theta\sin\psi & -\sin\phi\cos\psi-\cos\phi\sin\theta\sin\psi \\
+%\sin\theta        &  \sin\phi\cos\theta                            & \cos\phi\cos\theta 
 %                             \cos\psi\cos\theta&                             -\cos\theta\sin\psi&           \sin\theta \\
 %\cos\phi\sin\psi + \cos\psi\sin\phi\sin\theta& \cos\phi\cos\psi - \sin\phi\sin\psi\sin\theta& -\cos\theta\sin\phi	\\
 %\sin\phi\sin\psi - \cos\phi\cos\psi\sin\theta& \cos\psi\sin\phi + \cos\phi\sin\psi\sin\theta&  \cos\phi\cos\theta
 \end{bmatrix} 
 \end{align}
-其中${\bf R}_x(\phi)$等矩阵代表着绕单轴旋转的矩阵，他们的下标代表对应的旋转轴。在章节\ref{sec:rotationproperties}中我们建议读者自行推导二维坐标系中的旋转。理解二维坐标系中的旋转能够帮助理解${\bf R}_x(\phi)$的矩阵形式中负号应该出现在什么地方。初学者常常会混淆以下几个矩阵的意义：
+其中${\bf R}_x(\phi)$等矩阵代表着绕单轴旋转的矩阵，他们的下标代表对应的旋转轴。我们注意到三个单轴旋转的矩阵形式差不多，但是${\bf R}_y(\theta)$中的负号出现在对角线下方，而不是像另外两个矩阵那样出现在对角线上方。这是由二维坐标系中旋转矩阵的特性决定的。用右手定则简单地解释是因为“绕$x$轴旋转时，右手手指从$y$指到$z$只转过了90度；绕$z$轴旋转时，右手手指从$x$指到$y$也只转过了90度；而绕$y$轴旋转时，右手手指从$x$指到$z$轴转过了270度。”当然实际的原因可以通过更严格的推导看出来，这也是为什么在章节\ref{sec:rotationproperties}中我们建议读者自行推导二维坐标系中的旋转。理解二维坐标系中的旋转能够帮助理解${\bf R}_x(\phi)$的矩阵形式中负号应该出现在什么地方。初学者常常会混淆以下几个矩阵的意义：
 $$
 \begin{bmatrix}
 \cos\psi & - \sin\psi & 0\\
@@ -679,7 +688,7 @@ $$
 $$
 由于转秩和反向旋转的表达式相同，使用的时候一定要结合前后变换的坐标系看清矩阵的性质。
 
-从表达式中可以看到欧拉角表示的旋转矩阵是一系列的旋转操作。这里需要注意${\bf R}_x$，${\bf R}_y$和${\bf R}_z$都是绕某个轴进行旋转，其中说的轴是旋转矩阵右侧所要操作的坐标系的对应轴。因此在很多介绍欧拉角的资料中，人们会建立两个中间坐标系来讲解，一些指代欧拉角旋转操作顺序的代号里也会带入不同坐标系的坐标轴的概念，比如代号"$z-y'-x''$"指的是“先绕$z$轴旋转，再绕新坐标系的$y'$轴旋转，最后绕第二个新坐标系的"$x''$轴旋转”，他们的上标代表不同的坐标系。如下图所示
+从表达式中可以看到欧拉角表示的旋转矩阵是一系列的旋转操作。这里需要注意${\bf R}_x$，${\bf R}_y$和${\bf R}_z$的表达式中说的轴是旋转矩阵右侧所要操作的坐标系的对应轴。因此在很多介绍欧拉角的资料中，人们会建立两个中间坐标系来讲解，一些指代欧拉角旋转操作顺序的代号里也会带入不同坐标系的坐标轴的概念，比如代号"$z-y'-x''$"指的是“先绕$z$轴旋转，再绕新坐标系的$y'$轴旋转，最后绕第二个新坐标系的"$x''$轴旋转”，他们的上标代表不同的坐标系。如下图所示
 
 \begin{center}
 \includegraphics[width=0.9\textwidth]{images/euler.png}
@@ -1182,8 +1191,10 @@ $$
 \end{equation}
 
 
-本章将介绍角动量和惯性张量，并结合角速度的特性推导欧拉方程。本章内容和章节\ref{sec:rotmtx}以及\ref{sec:angular}联系较为紧密，因为理解欧拉方程的关键在于理解角速度以及旋转坐标系对物理量的影响。
+本章将介绍角动量和惯性张量，并结合角速度的特性推导欧拉方程。我们还会介绍如何用欧拉方程解释机械陀螺的原理，以及欧拉方程在多旋翼飞行器控制中的应用。本章内容和章节\ref{sec:rotmtx}以及\ref{sec:angular}联系较为紧密，因为理解欧拉方程的关键在于理解角速度以及旋转坐标系对物理量的影响。
 \subsection{质点角动量}
+角动量(angular momentum)是初等物理中的知识，我们这里只做简单介绍。
+
 在某一个坐标系中，绕定轴旋转的质点，距离旋转轴为$\vv{r}$，施加在质点力为$F$，则质点相对于定轴的力矩为
 
 \begin{center}
@@ -1193,6 +1204,8 @@ $$
 $$
 \vv{M} = \vv{r} \times \vv{F}
 $$
+
+我们把力矩记为$M$因为它是力矩（moment）的首字母。力矩也有一个比较工程化的名字叫扭矩（torque），通常用希腊字母$\tau$来表示。
 
 因为
 $$
@@ -1220,7 +1233,9 @@ $
 $$
 \Delta \vv{L}_b = \vv{r}_b \times \Delta m \vv{v}_b(\vv{r}_b)
 $$
-我们给每一个物理量都加上了下标$b$，是为了强调他们都是表示在机体坐标系中的物理量。这里的$\vv{v}(\vv{r}_b)$代表$\vv{v}$是关于$\vv{r}_b$的函数。而对于整个刚体，我们可以把所有的质量单元积分起来获得刚体的角动量，我们把离散的小量符号$\Delta$换成微分符号$d$，这样每个小质量单元都可以看成是相同的
+我们给每一个物理量都加上了下标$b$，是为了强调他们都是表示在机体坐标系中的物理量。这里的$\vv{v}(\vv{r}_b)$代表$\vv{v}$是关于$\vv{r}_b$的函数。
+
+而对于整个刚体，我们可以把所有的质量单元积分起来获得刚体的角动量，我们把离散的小量符号$\Delta$换成微分符号$d$，这样每个小质量单元都可以看成是相同的
 $$
 \vv{L}_b = \int d\vv{L}_b = \int \vv{r}_b \times dm \vv{v}_b(\vv{r}_b)
 $$
@@ -1237,7 +1252,7 @@ y^2+z^2	&	-xy		&	-xz	\\
 -xz		&	-yz		&	x^2+y^2
 \end{bmatrix}\vv{\omega}_b
 $$
-其中$\vv{r}_b = [x \ \ y \ \ z]^T$。把展开后的表达式带入上式，我们可以得到
+其中$\vv{r}_b = [x \ \ y \ \ z]^T$。把展开后的表达式带入公式\ref{eqn:ambody}，我们可以得到
 \begin{equation}\label{eqn:momemtum}
 \vv{L}_b = 
 \begin{bmatrix}
@@ -1380,13 +1395,14 @@ I_{xx}	&	0		&	0	\\
 0		&	0		&	I_{zz}
 \end{bmatrix}
 \end{equation}
-对于大部分四旋翼飞行器来说，因为飞行器有比较好的对称性，所以惯性张量中的很多项都会互相抵消。比如下图中两个电机，一个位置是$(x,y)$，另一个是$(x,-y)$，这样他们在积分项$\int xy dm$当中的和为0。然而对于很多异形的飞行器比如Inspire 1，或者机体下方悬挂着很重设备的飞行器，惯性张量中的项就很难被省略了。
+对于大部分四旋翼飞行器来说，因为飞行器有比较好的对称性，所以惯性张量中的很多项都会互相抵消。比如下图中两个电机，一个位置是$(x,y)$，另一个是$(x,-y)$，因此对于整个系统的惯量中的一个积分项$\int xy dm$来说，两个电机上的质量点的和作为积分项里的一个子项，他们的和为0。同理我们还可以分析飞行器的其他部分，最后得出整个积分项$\int xy dm$都为0的结论。
 
 \begin{center}
 \includegraphics[width=0.6\textwidth]{images/IMG_2301.jpg}
 \end{center}
 
-理论上，忽略不该忽略的惯性张量元素会导致飞行控制器在某些方向上延迟增大，而某些方向上延迟减小，大部分延迟无法被其他方式补偿掉。因此基于模型的控制器必须要获得比较精确的惯性张量，而不基于模型的控制器，如果要优化控制器的表现，依然需要仔细设定惯性张量。
+
+然而对于很多异形的飞行器比如Inspire 1，或者机体下方悬挂着很重设备的飞行器，惯性张量中的项就很难被省略了。理论上，忽略不该忽略的惯性张量元素会导致飞行控制器在某些方向上延迟增大，而某些方向上延迟减小，大部分延迟无法被其他方式补偿掉。因此基于模型的控制器必须要获得比较精确的惯性张量，而不基于模型的控制器，如果要优化控制器的表现，依然需要仔细设定惯性张量。
 
 \subsection{欧拉方程与机械陀螺}\label{sec:eulereqngyro}
 在章节\ref{sec:angularsensor}中我们简单介绍了机械陀螺的原理。现在我们借助欧拉方程定量地去分析陀螺旋转时的特性。本节中我们将进一步介绍更多关于欧拉角的知识，这些知识结合欧拉方程和机械陀螺原理能够让读者更好地理解欧拉角的特性。
@@ -1398,13 +1414,16 @@ I_{xx}	&	0		&	0	\\
 
 我们只考虑具有一个旋转陀螺和一个外圈结构的机械陀螺。我们依然用$OXYZ$来表示大地坐标系，陀螺上附加一个机体坐标系$ox_by_bz_b$。我们加上下标的原因是，在机体坐标系之外，我们更加关注的是一个建立在固定机械陀螺的外圈结构上的坐标系，我们叫它辅助坐标系$oxyz$，用$a$来表示（这是一个我自己发明的名词，英文是rotation frame）。这样做的原因是，理想情况下，机械陀螺高速旋转，它和外圈结构在陀螺旋转的方向上可以被认为没有接触，因此它对外圈结构只产生两个维度上的力矩。如果外圈结构的下端固定，则机械陀螺对外圈结构的作用力会使外圈结构只会发生对于大地坐标系的两轴旋转。
 \subsubsection{陀螺欧拉角}
-读者可能意识到这里说的旋转可以用欧拉角来表示，而且只需要两个角度。事实也正如此，我们把辅助坐标系相对大地坐标系的两个欧拉角分别叫做\textbf{进动角}（precession angle）和\textbf{章动角}(nutation angle)。
+读者可能意识到这里说的旋转可以用欧拉角来表示，而且只需要两个角度。事实也正如此，我们把辅助坐标系相对大地坐标系的两个欧拉角分别叫做\textbf{进动角}（precession angle）和\textbf{章动角}(nutation angle)。章动角的物理描述是：“陀螺旋转轴$z$轴和大地坐标系$Z$轴之间的夹角”，而进动角则是：“陀螺旋转轴$z$轴在$XY$平面投影的矢量和$X$轴的夹角”。
 
 \begin{center}
 \includegraphics[width=0.6\textwidth]{images/gyroframe1.png}
 \end{center}
 
-章动角的物理描述是：“陀螺旋转轴和大地坐标系$Z$轴之间的夹角”，而进动角则是：“陀螺旋转轴在$XY$平面投影的矢量和$X$轴的夹角”。而嵌在外圈结构内部的机械陀螺，相对与大地坐标系，除了进动角和章动角以外，还有一个相对于外圈结构的自旋角(spin angle)。所以我们如此建立辅助坐标系：陀螺的旋转轴为辅助坐标系$z$轴，大地坐标系的$Z$轴和陀螺的$z$轴和叉乘获得辅助坐标系的$x$轴($\vv{Z} \times \vv{z} = \vv{x}$)。由此，辅助坐标系的$y$轴就是$z$轴和$x$轴的叉乘($\vv{z} \times \vv{x} = \vv{y}$)。机体坐标系相对辅助坐标系，则增加了一个绕辅助坐标系的$z$轴的旋转。
+
+所以我们按如下方式建立辅助坐标系：陀螺的旋转轴为辅助坐标系$z$轴，大地坐标系的$Z$轴和陀螺的$z$轴和叉乘获得辅助坐标系的$x$轴($\vv{Z} \times \vv{z} = \vv{x}$)。由此，辅助坐标系的$y$轴就是$z$轴和$x$轴的叉乘($\vv{z} \times \vv{x} = \vv{y}$)。
+
+而嵌在外圈结构内部的机械陀螺，相对与大地坐标系，除了进动角和章动角以外，还有一个相对于外圈结构的自旋角(spin angle)。所以机体坐标系相对辅助坐标系，则增加了一个绕辅助坐标系的$z$轴的旋转。
 
 读者可以看出这是一种新的欧拉角顺序，它被称作“$z-x'-z''$”顺序。我们前面介绍NASA定义的欧拉角顺序是按照飞行器飞行的物理特性来定义的，类似地，本节介绍的欧拉角顺序是按照机械陀螺的物理特性来定义的。从大地坐标系到机体坐标系，欧拉角的第一个旋转产生进动角$\phi$，第二个旋转产生章动角$\theta$，第三个旋转产生自旋$\psi$。我们把机体坐标系和大地坐标系之间的变换写为
 $$
@@ -1432,14 +1451,14 @@ $$
 = \begin{bmatrix}\dot{\theta}	\\ \dot{\phi}\sin\theta	\\ \dot{\phi}\cos\theta	\end{bmatrix}
 $$
 进一步地，$\vv{\omega}_a$和$\frac{d\vv{\psi}}{dt}$相加之后经过${\bf R}_z^T(\psi)$的变换最终转换到机体坐标系中
-$$
+\begin{equation}
 \vv{\omega}_b = {\bf R}_z^T(\psi)(\begin{bmatrix}0	\\	0	\\ \dot{\psi}	\end{bmatrix} + \vv{\omega}_a) = 
 \begin{bmatrix}
  \dot{\phi}\sin\theta\sin\psi + \dot{\theta}\cos\psi	\\
  \dot{\phi}\sin\theta\cos\psi - \dot{\theta}\sin\psi	\\
                     \dot{\phi}\cos\theta + \dot{\psi}	\\
 \end{bmatrix}
-$$
+\end{equation}
 
 $\vv{\omega}_b$与$\dot{\phi}$,$\dot{\theta}$以及$\dot{\psi}$之间的这个关系被称为欧拉运动学方程。在很多刚体运动的研究中有广泛的应用。
 
@@ -1496,7 +1515,9 @@ $$
 %M_a = I_a dw_a + w_a x I_a w_a
 %    = R_ab I_b dw_b + w_a x I_b w_a
 %$$
-上述证明都是一些准备工作。现在我们准备深入理解陀螺的运动原理。旋转的陀螺作为一个刚体，我们很容易写出它在机体坐标系里的欧拉方程，但是这个方程并不能揭示太多运动性质，因为陀螺快速旋转，一个表示在大地坐标系下的恒力表示在机体坐标系里也是一个快速变化的力，我们很难看清楚这个力是如何影响陀螺的。而我们观察到在辅助坐标系里，陀螺的$x$轴始终是处于大地坐标系的$XY$平面上的，而且大地坐标系里的力对陀螺的影响，比如重力，可以很简单地表示为辅助坐标系里的一个绕$x$轴的力矩，这是一个非常简洁优美的性质。所以我们推导的目标是先从机体坐标系$b$的欧拉方程开始，然后变换到辅助坐标系中看看我们能够获得什么结果
+上述证明都是一些准备工作。现在我们准备深入理解陀螺的运动原理。旋转的陀螺作为一个刚体，我们很容易写出它在机体坐标系里的欧拉方程，但是这个方程并不能揭示太多运动性质，因为陀螺快速旋转，一个表示在大地坐标系下的恒力表示在机体坐标系里也是一个快速变化的力，我们很难看清楚这个力是如何影响陀螺的。
+
+而我们观察到在辅助坐标系里，陀螺的$x$轴始终是处于大地坐标系的$XY$平面上的，而且大地坐标系里的力对陀螺的影响，比如重力，可以很简单地表示为辅助坐标系里的一个绕$x$轴的力矩，这是一个非常简洁优美的性质。所以我们推导的目标是先从机体坐标系$b$的欧拉方程开始，然后变换到辅助坐标系$a$中看看我们能够获得什么结果
  
 在坐标系$b$中写出欧拉方程
 $$
@@ -1505,7 +1526,7 @@ $$
 
 我们在方程的两边乘以${\bf R}_{ab}$，希望通过变换获得$M_a$的表达式
 \begin{align*}
-{\bf R}_{ab}\vv{M}_b = & \ {\bf R}_{ab}{\bf I}_b\dot{\vv{\omega}}_b + {\bf R}_{ab}(\vv{\omega}_b \times {\bf I}_b\vv{\omega}_b) \\
+M_a = {\bf R}_{ab}\vv{M}_b = & \ {\bf R}_{ab}{\bf I}_b\dot{\vv{\omega}}_b + {\bf R}_{ab}(\vv{\omega}_b \times {\bf I}_b\vv{\omega}_b) \\
 					 = & \ {\bf I}_b{\bf R}_{ab}\dot{\vv{\omega}}_b + {\bf R}_{ab}\vv{\omega}_b \times {\bf I}_b{\bf R}_{ab}\vv{\omega}_b \\
 \end{align*}
 根据上一节欧拉运动方程的推导
@@ -1536,17 +1557,17 @@ $$
 %\end{equation}
 
 %另外注意到这样建立坐标系后陀螺的惯性张量可以写成仅有对角线上元素的形式。
-如果我们把力矩的元素表示成$\vv{M} = [M_x \ \ M_y \ \ M_z]^T$，
+如果我们把力矩的元素表示成$\vv{M}_b = [M_x \ \ M_y \ \ M_z]^T$，
 %并且结合公式\ref{eqn:simpleintertia}\ref{eqn:modifyeuler}\ref{eqn:gyroomega}和\ref{eqn:gryoW}，
 经过计算和变形之后我们可以得到
-\begin{align}\label{eqn:torquetoangular}
+\begin{align}
 M_x = &	\ I_{xx}\ddot{\theta} - I_{yy}\dot{\phi}^2\cos\theta\sin\theta + I_{zz}\dot{\phi}\sin\theta(\dot{\phi}\cos\theta + \dot{\psi}) - I_{xx}\dot{\phi}\dot{\psi}\sin\theta \\ 
 M_y = & \ I_{yy}(\dot{\phi}\dot{\theta}\cos\theta + \ddot{\phi}\sin\theta) - I_{zz}\dot{\theta}(\dot{\phi}\cos\theta + \dot{\psi}) + I_{xx}\dot{\psi}\dot{\theta}	\\
 M_z = & \ I_{zz}(\ddot{\phi}\cos\theta + \ddot{\psi}) %+ I_{yy}\dot{\phi}\dot{\theta}\sin\theta 
 \end{align}
-我们获得了陀螺旋转过程中角速度、角加速度和力矩的关系。上述表达式的复杂程度也从一个侧面解释了为什么陀螺在转动时会产生各种匪夷所思的运动，因为力矩和角速度之间的关系极度非线性、非常难以理解。但是，在坐标系$a$中的$z$轴上的力矩较为简单，如果没有角加速度，则陀螺的外圈结构不会在$z$轴方向转动。这一点能够从陀螺的表现中看出来。
+我们获得了陀螺旋转过程中在辅助坐标系$a$下角速度、角加速度和力矩的关系。上述表达式的复杂程度也从一个侧面解释了为什么陀螺在转动时会产生各种匪夷所思的运动，因为力矩和角速度之间的关系极度非线性、非常难以理解。但是，在坐标系$a$中的$z$轴上的力矩较为简单，如果没有角加速度，则陀螺的外圈结构不会在$z$轴方向转动。这一点能够从陀螺的表现中看出来。
 
-公式\ref{eqn:torquetoangular}在某些特定的条件下会大大简化，比如下图中的状态
+上述公式在某些特定的条件下会大大简化，比如下图中的状态
 
 \begin{center}
 \includegraphics[width=0.6\textwidth]{images/gyroframe2.png}
@@ -1572,7 +1593,7 @@ M_y = & \ 0	\\
 M_z = & \ 0
 \end{align}
 
-因此在我们前面提过的机械陀螺的示例中，不难看出它其实是简化的公式描述的情况，input axis对应上述的$x$轴，output axis对应上述的$y$轴，在平时状态下它没有受到任何力矩。结合公式分析，外界的转动相当于在input axis上施加一个转动力矩$M_x$，此时output axis会开始产生转速$\dot{\phi}$。额外的仪器会检测output axis的转动，通过反馈控制在input axis上增加一个补偿力矩，补偿力矩反映了转动力矩的大小，因此也能根据欧拉公式换算出外界转动的角速度。
+因此在我们前面提过的机械陀螺的示例中，不难看出机械陀螺恰好是公式\ref{eqn:torquetoangularsimple}描述的情况，input axis对应上述的$x$轴，output axis对应上述的$y$轴，在平时状态下它没有受到任何力矩。结合公式分析，外界的转动相当于在input axis上施加一个转动力矩$M_x$，此时output axis会开始产生转速$\dot{\phi}$。额外的仪器会检测output axis的转动，通过反馈控制在input axis上增加一个补偿力矩，补偿力矩反映了转动力矩的大小，因此也能根据欧拉公式换算出外界转动的角速度。
 
 \begin{center}
 \includegraphics[width=0.4\textwidth]{images/gyroscopeAxesR.png}
